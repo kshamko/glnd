@@ -1,0 +1,24 @@
+version: "3"
+services:
+  database:
+    image: glassnode/code-challenge-2020-database:latest
+    environment:
+      POSTGRES_DB: eth
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - "5432:5432"
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      HTTP_PORT: 8080
+      POSTGRES_DSN: 'host=database port=5432 user=test password=test dbname=eth sslmode=disable'
+      DEBUG_LISTEN: ':6060'
+      VERBOSE: 'true' 
+    depends_on: 
+      - database         
+    ports:
+      - "8080:8080"
+      - "6060:6060"

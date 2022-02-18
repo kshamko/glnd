@@ -1,0 +1,53 @@
+swagger: '2.0'
+info:
+  title: "GLND API Swagger"
+  version: 0.0.1
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /api/v1 
+
+paths:
+  /fees:
+    get:
+      operationId: Fees
+      responses:
+        '200':
+          description: 'A successful response.'
+          schema:
+            $ref: '#/definitions/Fees'
+        '500':
+          description: 'Error response'
+          schema: 
+            $ref: '#/definitions/ApiInvalidResponse'
+        '404':
+          description: 'data not found'
+          schema: 
+            $ref: '#/definitions/ApiInvalidResponse'        
+      tags:
+        - Fees
+
+definitions:
+  Fees:
+    type: array
+    items:
+      $ref: '#/definitions/Fee'
+
+  Fee:
+    type: object
+    properties:
+      t:
+        type: integer
+        format: int64
+      v:
+        type: number
+        format: double
+  
+  ApiInvalidResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
